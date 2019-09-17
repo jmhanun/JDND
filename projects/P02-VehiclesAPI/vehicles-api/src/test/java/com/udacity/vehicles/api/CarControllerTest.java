@@ -165,6 +165,36 @@ public class CarControllerTest {
 
         ;
     }
+    /**
+     * Tests the update a single car by ID.
+     *
+     * @throws Exception if the read operation for a single car fails
+     */
+    @Test
+    public void updateCar() throws Exception {
+        Car car = getCar();
+        mvc.perform(
+                post(new URI("/cars"))
+                        .content(json.write(car).getJson())
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isCreated());
+
+        car.getDetails().setModel("New Model");
+        car.getDetails().setEngine("New Engine");
+        car.getDetails().setBody("New Body");
+        car.getDetails().setFuelType("New FuelType");
+        car.getDetails().setMileage(15000);
+
+
+        mvc.perform(put(new URI("/cars/1"))
+                .content(json.write(car).getJson())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
 
     /**
      * Tests the deletion of a single car by ID.
