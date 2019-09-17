@@ -31,7 +31,10 @@ public class Location {
     @Transient
     private String zip;
 
-    public Location() {
+    public  Location(){
+    }
+
+    public Location(int i, int i1) {
     }
 
     public Location(Double lat, Double lon) {
